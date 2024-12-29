@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Лента записей
+{% endblock title %}
+
+{% block content %}
+  <h1>Лента записей</h1>                        
+  <!-- Перебираем в цикле все посты -->
+  <hr>
+  {% for post in post_list %}
+    <article>
+      <ul>
+        <li>
+          Место: {{ post.location }}    
+        </li>
+        <li>
+          Дата: {{ post.date }}
+        </li>
+        <li>
+          Категория: <a href="{% url 'blog:category_posts' post.category %}">{{ post.category }}</a>
+        </li>
+      </ul>
+      <p>
+        {{ post.text|truncatewords:10 }}
+      </p>
+      <a href="{% url 'blog:post_detail' post.id %}">Читать полный текст</a>
+    </article>
+    {% if not forloop.last %}
+    <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock content %}
